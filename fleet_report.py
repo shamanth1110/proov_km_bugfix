@@ -16,6 +16,10 @@ def car_wear(car: dict) -> float:
 
 def fleet_summary(fleet: list) -> dict:
     """Return count, number due, and average wear across the fleet."""
+    # Fix: Prevent Division by Zero crash if the fleet list is empty
+    if not fleet:
+        return {"count": 0, "due": 0, "average_wear": 0.0}
+
     total = 0.0
     due = 0
     for car in fleet:
