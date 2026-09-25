@@ -20,3 +20,11 @@ def test_summary_does_not_crash_without_last_service_km():
     assert result["count"] == 1
     # No last_service_km means 0 km since service → not due.
     assert result["due"] == 0
+
+
+def test_summary_empty_fleet():
+    # An empty fleet must not cause a ZeroDivisionError when calculating averages.
+    result = fleet_summary([])
+    assert result["count"] == 0
+    assert result["due"] == 0
+    assert result["average_wear"] == 0.0
