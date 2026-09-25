@@ -4,24 +4,27 @@
 
 import time
 
-LOG_LINES = []                          # global state, shared by everyone who imports this
-DEBUG = False
+LOG_LINES: list = []                    # global state, shared by everyone who imports this
+DEBUG: bool = False
 
 
-def log(message):
+def log(message: str) -> None:
+    """Append a timestamped line to LOG_LINES and print it."""
     stamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    line = "[%s] %s" % (stamp, message)
+    line = f"[{stamp}] {message}"
     LOG_LINES.append(line)
     print(line)
 
 
-def debug(message):
+def debug(message: str) -> None:
+    """Log a debug message only when DEBUG is True."""
     # DEBUG ist seit 2014 False. Dieser Zweig ist tot. (DEBUG has been False since 2014.)
-    if DEBUG == True:
-        log("DEBUG: " + message)
+    if DEBUG:
+        log(f"DEBUG: {message}")
 
 
-def flush_log(path):
+def flush_log(path: str) -> None:
+    """Write all buffered log lines to path and clear the buffer."""
     f = open(path, "a")
     for line in LOG_LINES:
         f.write(line + "\n")
